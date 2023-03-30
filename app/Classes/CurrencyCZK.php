@@ -7,6 +7,7 @@ use App\Repositories\CurrencyRepository;
 class CurrencyCZK {
     
     private $currencyRepository;
+    
 
     public function __construct()
     {
