@@ -10,7 +10,7 @@
 4. I create a controller and a route + axios, to send data to Vuejs.
 5. I create a table to display the currencies.
 
-# I didn't used the conventional laravel model, because the code is running faster using base classes and repositories. :) 
+* I didn't used the conventional laravel model, because the code is running faster using base classes and repositories. :) 
 
     Pictures from the project:
     
