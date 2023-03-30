@@ -2,17 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Classes\CurrencyCZK;
 
 class CurrencyController
 {
-    private $currencyCZK;
+    /**
+     * @var object
+     */
+    private CurrencyCZK $currencyCZK;
 
-    public function __construct()
+    public function __construct(CurrencyCZK $currencyCZK)
     {
-        $this->currencyCZK = CurrencyCZK::class;
+        $this->currencyCZK = $currencyCZK;
+    }
+
+    public function getCurrencies() {
+        $currencies = $this->currencyCZK->getCurrenciesFromRepository();
+
+        return $currencies;
     }
 
 

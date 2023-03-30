@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CurrencyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,19 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/products', function () {
-    return [
-                [
-                    'name' => 'USD',
-                    'value' => 0.22
-                ],
-                [
-                    'name' => 'EUR',
-                    'value' => 0.6
-                ],
-                [
-                    'name' => 'GBP',
-                    'value' => 0.88
-                ]
-    ];
-});
+Route::get('/currencies', [CurrencyController::class, 'getCurrencies']);

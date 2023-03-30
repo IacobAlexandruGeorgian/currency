@@ -3,10 +3,14 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-// use App\Repositories\CurrencyRepository;
+use App\Repositories\CurrencyRepository;
 
 class getCurrency extends Command
 {
+    /**
+     * @var object
+     */
+    private CurrencyRepository $currencyRepository;
 
     /**
      * The name and signature of the console command.
@@ -22,13 +26,11 @@ class getCurrency extends Command
      */
     protected $description = 'Get the currency for CZK';
 
-
-    // private $currencyRepository;
-
-    // public function __construct()
-    // {
-    //     $this->currencyRepository = CurrencyRepository::class;
-    // }
+    public function __construct(CurrencyRepository $currencyRepository)
+    {
+        parent::__construct();
+        $this->currencyRepository = $currencyRepository;
+    }
 
     /**
      * Execute the console command.
@@ -37,9 +39,12 @@ class getCurrency extends Command
      */
     public function handle()
     {
+        $currencies = [];
         $currencies = $this->getCurrenciesFromAPI();
-    
-        // $this->currencyRepository->
+
+        if (!empty($currencies)) {
+            $this->currencyRepository->addEditCurrencies($currencies);
+        }
     }
 
     private function getCurrenciesFromAPI()
@@ -48,11 +53,14 @@ class getCurrency extends Command
 
         $response = file_get_contents('https://api.exchangerate-api.com/v4/latest/CZK');
         $response = json_decode($response);
-        
-        $currencies['USD'] = 1 / $response['rates']['USD'];
-        $currencies['EUR'] = 1 / $response['rates']['EUR'];
-        $currencies['GBP'] = 1 / $response['rates']['GBP'];
+
+        if (property_exists($response, 'rates')) {
+            $currencies['USD'] = 1 / $response->rates->USD;
+            $currencies['EUR'] = 1 / $response->rates->EUR;
+            $currencies['GBP'] = 1 / $response->rates->GBP;
+        }
 
         return $currencies;
+
     }
 }

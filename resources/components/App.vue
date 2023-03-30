@@ -1,8 +1,7 @@
 <template>
       <div>
         <h2 class="text-center">Currency table</h2>
- 
-        <table class="table">
+        <table class="table" style="border: 2px solid black; width: 50%; text-align: center; margin-left: 25%;">
             <thead>
             <tr>
                 <th>Currency</th>
@@ -10,9 +9,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="currency in currencies" :key="currency.name">
-                <td>{{ currency.name }}</td>
-                <td>{{ currency.value }}</td>
+            <tr v-for="(value, key) in currencies" :key="key">
+                <td>{{ key }}</td>
+                <td style="color: green">{{ value }}</td>
             </tr>
             </tbody>
         </table>
@@ -30,8 +29,7 @@
         },
 
     created() {
-        axios.get('/products').then(response => {
-                console.log(response.data);
+        axios.get('/currencies').then(response => {
                 this.currencies = response.data;
             });
     },

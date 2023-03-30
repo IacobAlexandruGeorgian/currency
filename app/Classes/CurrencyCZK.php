@@ -6,12 +6,20 @@ use App\Repositories\CurrencyRepository;
 
 class CurrencyCZK {
     
-    private $currencyRepository;
+    /**
+     * @var object
+     */
+    private CurrencyRepository $currencyRepository;
     
-
-    public function __construct()
+    public function __construct(CurrencyRepository $currencyRepository)
     {
-        $this->currencyRepository = CurrencyRepository::class;
+        $this->currencyRepository = $currencyRepository;
+    }
+
+    public function getCurrenciesFromRepository() {
+        $currencies = $this->currencyRepository->getCurrenciesFromDatabase();
+
+        return (array)$currencies;
     }
 
 
